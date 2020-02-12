@@ -19,7 +19,7 @@ if sys.version_info < (3, 6):
 
 setuptools.setup(
     name="texar",
-    version="0.2.4",
+    version="0.4.0-unreleased",
     url="https://github.com/asyml/texar",
 
     description="Toolkit for Machine Learning and Text Generation",
@@ -31,22 +31,16 @@ setuptools.setup(
 
     install_requires=[
         'regex>=2018.01.10',
-        'numpy<1.17.0',
-        'pathlib>=1.0',
-        'pyyaml',
+        'numpy',
         'requests',
         'funcsigs>=1.0.2',
         'sentencepiece>=0.1.8',
-        'packaging'
+        'packaging>=19.0'
     ],
     extras_require={
-        'tensorflow-cpu': [
-            'tensorflow>=1.10.0,<2.0',
-            'tensorflow-probability>=0.3.0,<0.8.0'
-        ],
-        'tensorflow-gpu': [
-            'tensorflow-gpu>=1.10.0,<2.0',
-            'tensorflow-probability>=0.3.0,<0.8.0'
+        'tensorflow': [
+            'tensorflow>=2.0.0',
+            'tensorflow-probability>=0.3.0'
         ]
     },
     package_data={
