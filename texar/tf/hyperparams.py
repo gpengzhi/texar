@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 """
-Hyperparameter manager
+Hyperparameter manager.
 """
 
 import copy
@@ -32,19 +32,23 @@ def _type_name(value):
 class HParams:
     r"""A class that maintains hyperparameters for configuring Texar modules.
     The class has several useful features:
+
     - **Auto-completion of missing values.** Users can specify only a subset of
       hyperparameters they care about. Other hyperparameters will automatically
       take the default values. The auto-completion performs **recursively** so
       that hyperparameters taking `dict` values will also be auto-completed
       **All Texar modules** provide a :meth:`default_hparams` containing
       allowed hyperparameters and their default values. For example:
+
         .. code-block:: python
+
             ## Recursive auto-completion
             default_hparams = {"a": 1, "b": {"c": 2, "d": 3}}
             hparams = {"b": {"c": 22}}
             hparams_ = HParams(hparams, default_hparams)
             hparams_.todict() == {"a": 1, "b": {"c": 22, "d": 3}}
                 # "a" and "d" are auto-completed
+
             ## All Texar modules have built-in `default_hparams`
             hparams = {"dropout_rate": 0.1}
             emb = tx.modules.WordEmbedder(hparams=hparams, ...)
@@ -53,30 +57,37 @@ class HParams:
                 "dim": 100            # default value
                 ...
             }
+
     - **Automatic type-check.** For most hyperparameters, provided value must
       have the same or compatible dtype with the default value. :class:`HParams`
       does necessary type-check, and raises Error if improper dtype is provided.
       Also, hyperparameters not listed in `default_hparams` are not allowed,
       except for `"kwargs"` as detailed below.
+
     - **Flexible dtype for specified hyperparameters.**  Some hyperparameters
       may allow different dtypes of values.
+
         - Hyperparameters named `"type"` are not type-checked.
           For example, in :func:`~texar.torch.core.get_rnn_cell`, hyperparameter
           `"type"` can take value of an RNNCell class, its string name of module
           path, or an RNNCell class instance. (String name or module path is
           allowed so that users can specify the value in YAML configuration
           files.)
+
         - For other hyperparameters, list them in the `"@no_typecheck"` field
           in :meth:`default_hparams` to skip type-check. For example, in
           :class:`~texar.torch.modules.Conv1DNetwork`, hyperparameter
           `"kernel_size"` can be set to either a `list` of `int`\ s or simply
           an `int`.
+
     - **Special flexibility of keyword argument hyperparameters.**
       Hyperparameters named ``"kwargs"`` are used as keyword arguments for a
       class constructor or a function call. Such hyperparameters take a `dict`,
       and users can add arbitrary valid keyword arguments to the dict.
       For example:
+
         .. code-block:: python
+
             default_rnn_cell_hparams = {
                 "type": "LSTMCell",
                 "kwargs": {"num_units": 256}
@@ -92,9 +103,12 @@ class HParams:
                 }
             }
             _ = HParams(my_hparams, default_rnn_cell_hparams)
+
     - **Rich interfaces.** An :class:`HParams` instance provides rich interfaces
       for accessing, updating, or adding hyperparameters.
+
         .. code-block:: python
+
             hparams = HParams(my_hparams, default_hparams)
             # Access
             hparams.type == hparams["type"]
@@ -105,12 +119,16 @@ class HParams:
             # Add new
             hparams.add_hparam("index", 1)
             hparams.index == 1
+
             # Convert to `dict` (recursively)
             type(hparams.todic()) == dict
+
             # I/O
             pickle.dump(hparams, "hparams.dump")
             with open("hparams.dump", 'rb') as f:
                 hparams_loaded = pickle.load(f)
+
+
     Args:
         hparams: A `dict` or an :class:`HParams` instance containing
             hyperparameters. If `None`, all hyperparameters are set to default
@@ -150,6 +168,7 @@ class HParams:
                default_hparams: Optional[Dict[str, Any]],
                allow_new_hparam: bool = False):
         r"""Parses hyperparameters.
+
         Args:
             hparams (dict): Hyperparameters. If `None`, all hyperparameters are
                 set to default values.
@@ -158,9 +177,11 @@ class HParams:
             allow_new_hparam (bool): If `False` (default), :attr:`hparams`
                 cannot contain hyperparameters that are not included in
                 :attr:`default_hparams`, except the case of :attr:`"kwargs"`.
+
         Return:
             A dictionary of parsed hyperparameters. Returns `None` if both
             :attr:`hparams` and :attr:`default_hparams` are `None`.
+
         Raises:
             ValueError: If :attr:`hparams` is not `None` and
                 :attr:`default_hparams` is `None`.
@@ -324,6 +345,7 @@ class HParams:
     def get(self, name: str, default: Optional[Any] = None) -> Any:
         r"""Returns the hyperparameter value for the given name. If name is not
         available then returns :attr:`default`.
+
         Args:
             name (str): the name of hyperparameter.
             default: the value to be returned in case name does not exist.

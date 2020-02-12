@@ -15,3 +15,6 @@
 Modules of Texar library.
 """
 
+# pylint: disable=wildcard-import
+
+from texar.tf.version import VERSION as __version__
