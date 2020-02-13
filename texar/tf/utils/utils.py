@@ -18,9 +18,9 @@ Miscellaneous Utility functions.
 import inspect
 from pydoc import locate
 
+import numpy as np
 import funcsigs
 
-import numpy as np
 
 __all__ = [
     "get_args",
