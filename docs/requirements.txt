@@ -1,0 +1,14 @@
+sphinx
+sphinx-rtd-theme >= 0.2.4
+Pygments >= 2.1.1, < 2.5.1
+funcsigs
+recommonmark
+mypy_extensions
+sphinxcontrib-spelling
+
+# Tokenizer module dependency
+regex >= 2018.01.10
+sentencepiece >= 0.1.8
+
+tensorflow >= 2.0.0
+tensorflow-probability >= 0.3.0

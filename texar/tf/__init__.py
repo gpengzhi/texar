@@ -18,3 +18,5 @@ Modules of Texar library.
 # pylint: disable=wildcard-import
 
 from texar.tf.version import VERSION as __version__
+
+from texar.tf.hyperparams import *
