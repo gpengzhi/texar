@@ -20,11 +20,10 @@ The code structure adapted from:
 
 from typing import Any, Dict, List, Optional, Tuple, overload
 
-import json
 import os
-import warnings
+import json
 
-from texar.tf.module_base import ModuleBase
+from texar.tf.hyperparams import HParams
 
 __all__ = [
     "TokenizerBase",
@@ -35,7 +34,7 @@ ADDED_TOKENS_FILE = 'added_tokens.json'
 CONFIG_FILE = 'config.json'
 
 
-class TokenizerBase(ModuleBase):
+class TokenizerBase:
     r"""Base class inherited by all tokenizer classes. This class
     handles downloading and loading pre-trained tokenizer and adding tokens to
     the vocabulary.
@@ -60,7 +59,17 @@ class TokenizerBase(ModuleBase):
                                   "mask_token", "additional_special_tokens"]
 
     def __init__(self, hparams):
-        super().__init__(hparams=hparams)
+        super().__init__()
+        if not hasattr(self, '_hparams'):
+            self._hparams = HParams(hparams, self.default_hparams())
+        else:
+            # Probably already parsed by subclasses. We rely on subclass
+            # implementations to get this right.
+            # As a sanity check, we require `hparams` to be `None` in this case.
+            if hparams is not None:
+                raise ValueError(
+                    "`self._hparams` already exists. Argument `hparams` "
+                    "must be set to `None` in this case.")
 
         self.config = None
 
@@ -83,13 +92,31 @@ class TokenizerBase(ModuleBase):
                     assert isinstance(value, (list, tuple)) and \
                            all(isinstance(v, str) for v in value)
                 else:
-                    if value is not None:
-                        assert isinstance(value, str)
-                    else:
-                        warnings.warn(f"Trying to set None as value special "
-                                      f"token '{key}'. Proceed only if you"
-                                      f" are sure!", UserWarning)
+                    assert isinstance(value, str)
                 setattr(self, key, value)
+
+    @staticmethod
+    def default_hparams():
+        r"""Returns a `dict` of hyperparameters of the module with default
+        values. Used to replace the missing values of input `hparams`
+        during module construction.
+
+        .. code-block:: python
+
+            {
+                "name": "module"
+            }
+        """
+        return {
+            "name": "module"
+        }
+
+    @property
+    def hparams(self):
+        r"""An :class:`~texar.tf.HParams` instance. The hyperparameters
+        of the module.
+        """
+        return self._hparams
 
     @classmethod
     def load(cls, pretrained_model_path: str, configs: Optional[Dict] = None):
@@ -386,11 +413,11 @@ class TokenizerBase(ModuleBase):
         for token in tokens:
             ids.append(self._map_token_to_id_with_added_voc(token))
         if len(ids) > self.max_len:
-            warnings.warn(
+            raise ValueError(
                 "Token indices sequence length is longer than the specified "
                 "maximum sequence length for this model ({} > {}). Running "
                 "this sequence through the model will result in indexing "
-                "errors".format(len(ids), self.max_len), UserWarning)
+                "errors".format(len(ids), self.max_len))
         return ids
 
     # pylint: enable=unused-argument,function-redefined
