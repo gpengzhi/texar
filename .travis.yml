@@ -14,6 +14,7 @@ env:
 install:
   - pip install --upgrade pip
   - pip install --progress-bar off tensorflow==$TENSORFLOW_VER
+  - pip install --progress-bar off .[tensorflow]
   - if [[ $TENSORFLOW_VER == "2.1.0" ]]; then
       pip install pylint==2.4.4 flake8==3.7.9;
     fi
