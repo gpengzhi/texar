@@ -38,6 +38,11 @@ Pre-trained
     :private-members:
     :exclude-members: _name_to_variable
 
+:hidden:`PretrainedBERTMixin`
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.. autoclass:: texar.tf.modules.PretrainedBERTMixin
+    :members:
+
 Connectors
 ==========
 

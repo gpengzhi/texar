@@ -16,3 +16,4 @@ Pre-trained modules of Texar library.
 """
 
 from texar.tf.modules.pretrained.pretrained_base import *
+from texar.tf.modules.pretrained.bert import *
