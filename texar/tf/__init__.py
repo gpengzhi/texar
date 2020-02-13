@@ -20,3 +20,4 @@ Modules of Texar library.
 from texar.tf.version import VERSION as __version__
 
 from texar.tf.hyperparams import *
+from texar.tf.module_base import *

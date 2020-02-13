@@ -7,6 +7,9 @@ Modules
 ModuleBase
 ===========
 
+.. autoclass:: texar.tf.ModuleBase
+    :members:
+
 Embedders
 =========
 
