@@ -15,4 +15,5 @@
 Modules of Texar library utils.
 """
 
+from texar.tf.utils.utils import *
 from texar.tf.utils.utils_io import *

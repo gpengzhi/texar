@@ -7,6 +7,16 @@ Data
 Tokenizer
 ==========
 
+:hidden:`TokenizerBase`
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.. autoclass:: texar.tf.data.TokenizerBase
+    :members:
+
+:hidden:`BERTTokenizer`
+~~~~~~~~~~~~~~~~~~~~~~~~
+.. autoclass:: texar.tf.data.BERTTokenizer
+    :members:
+
 Vocabulary
 ==========
 
