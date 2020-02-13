@@ -12,13 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 """
-Modules of Texar library.
+Modules of Texar library module.
 """
 
-# pylint: disable=wildcard-import
-
-from texar.tf.version import VERSION as __version__
-
-from texar.tf import modules
-from texar.tf.hyperparams import *
-from texar.tf.module_base import *
+from texar.tf.modules.pretrained import *

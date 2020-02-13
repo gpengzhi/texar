@@ -28,6 +28,16 @@ Regressors
 Pre-trained
 ===========
 
+.. spelling::
+    pooler
+
+:hidden:`PretrainedMixin`
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.. autoclass:: texar.tf.modules.PretrainedMixin
+    :members:
+    :private-members:
+    :exclude-members: _name_to_variable
+
 Connectors
 ==========
 

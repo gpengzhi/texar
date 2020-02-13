@@ -1,4 +1,4 @@
-# Copyright 2020 The Texar Authors. All Rights Reserved.
+# Copyright 2019 The Texar Authors. All Rights Reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -12,13 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 """
-Modules of Texar library.
+Pre-trained modules of Texar library.
 """
 
-# pylint: disable=wildcard-import
-
-from texar.tf.version import VERSION as __version__
-
-from texar.tf import modules
-from texar.tf.hyperparams import *
-from texar.tf.module_base import *
+from texar.tf.modules.pretrained.pretrained_base import *
